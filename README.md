@@ -14,6 +14,7 @@ npm install edit-script
 $ edit-script --help
 Edit npm scripts from the command line without worrying about json escaping.
 
+    edit-script
     edit-script <script>
 ```
 
