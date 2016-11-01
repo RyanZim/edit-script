@@ -6,6 +6,16 @@ var findPkg = require('pkg-up');
 
 var script = process.argv[2];
 
+// help message:
+if (script === '--help') {
+  console.log(
+    `Edit npm scripts from the command line without worrying about json escaping.
+
+    edit-script <script>`
+  );
+  process.exit();
+}
+
 var pkgPath;
 var pkg = {}
 var scripts = {};
