@@ -27,6 +27,7 @@ if (!script) {
 
 findPkg()
 .then(function (p) {
+  if (!p) throw new Error('No package.json file found!');
   pkgPath = p;
   return fs.readJson(pkgPath);
 })
@@ -68,4 +69,8 @@ findPkg()
     scripts[script] = val;
   }
   return fs.writeJson(pkgPath, pkg)
+})
+.catch(function (err) {
+  console.error(err);
+  process.exit(1);
 });
