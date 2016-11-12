@@ -2,6 +2,8 @@
 
 Edit npm scripts from the command line without worrying about json escaping.
 
+[![asciicast](https://asciinema.org/a/92481.png)](https://asciinema.org/a/92481)
+
 ## Installation
 
 ```bash
