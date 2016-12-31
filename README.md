@@ -2,7 +2,7 @@
 
 Edit npm scripts from the command line without worrying about json escaping.
 
-[![asciicast](https://asciinema.org/a/92481.png)](https://asciinema.org/a/92481)
+[![asciicast](https://asciinema.org/a/97693.png)](https://asciinema.org/a/97693)
 
 ## Installation
 
@@ -19,6 +19,12 @@ Edit npm scripts from the command line without worrying about json escaping.
     edit-script
     edit-script <script>
 ```
+
+Running `edit-script` will give you an interactive interface that allows you to choose a script or create a new one.
+
+`edit-script <script>` allows you to select the script you want to edit on the command line. If `<script>` does not exist, it will allow you to create a new script with that name.
+
+To delete a script, simply empty the script in the editor. `edit-script` will delete the key in the `package.json` for you.
 
 ## Editor Selection
 
