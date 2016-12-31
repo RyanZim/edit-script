@@ -18,7 +18,7 @@ if (process.argv[2] === '--help') {
 }
 
 var pkgPath;
-var pkg = {}
+var pkg = {};
 var scripts = {};
 
 const NEW_SCRIPT_SYMBOL = Symbol('Create new script');
@@ -55,13 +55,13 @@ findPkg()
     } else {
       scripts[script] = val;
     }
-    return fs.writeJson(pkgPath, pkg)
-  })
+    return fs.writeJson(pkgPath, pkg);
+  });
 })
 .catch(function (err) {
   console.error(err);
   process.exit(1);
-});;
+});
 
 function getScriptName() {
   if (script) {
@@ -87,7 +87,7 @@ function getScriptName() {
         name: pad(key, scripts[key]),
         value: key,
         short: key,
-      }
+      };
     });
     // Add aditional choices:
     choices.push(new inquirer.Separator());
@@ -98,7 +98,7 @@ function getScriptName() {
     choices.push({
       name: 'Exit edit-script',
       value: EXIT_SYMBOL,
-    })
+    });
     // Prompt for script name:
     return inquirer.prompt([
       {
@@ -124,14 +124,13 @@ function getScriptName() {
           .then(function (answers) {
             // Set it:
             script = answers.name;
-          })
-          break;
+          });
         case EXIT_SYMBOL:
           process.exit();
         default:
           script = answers.script;
       }
-    })
+    });
   }
 }
 
