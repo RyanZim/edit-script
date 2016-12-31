@@ -57,11 +57,11 @@ findPkg()
     }
     return fs.writeJson(pkgPath, pkg)
   })
-  .catch(function (err) {
-    console.error(err);
-    process.exit(1);
-  });
-});
+})
+.catch(function (err) {
+  console.error(err);
+  process.exit(1);
+});;
 
 function getScriptName() {
   if (script) {
@@ -75,7 +75,7 @@ function getScriptName() {
       },
     ])
     .then(function (answers) {
-      if (!script && !scripts[script] && !answers.create) {
+      if (!answers.create) {
         console.log('Aborting');
         process.exit();
       }
