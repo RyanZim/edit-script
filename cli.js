@@ -52,9 +52,7 @@ findPkg()
     if (!val) {
       console.log('Deleting script.');
       delete scripts[script];
-    } else {
-      scripts[script] = val;
-    }
+    } else scripts[script] = val;
     return fs.writeJson(pkgPath, pkg);
   });
 })
@@ -64,23 +62,8 @@ findPkg()
 });
 
 function getScriptName() {
-  if (script) {
-    // Verify creation if the script does not exist:
-    return inquirer.prompt([
-      {
-        type: 'confirm',
-        name: 'create',
-        message: `The script "${script}" does not exist. Create it?`,
-        when: !scripts[script],
-      },
-    ])
-    .then(function (answers) {
-      if (!answers.create) {
-        console.log('Aborting');
-        process.exit();
-      }
-    });
-  } else {
+  if (script && !scripts[script]) return confirmCreation();
+  else {
     // Get choices:
     var choices = Object.keys(scripts).map(function (key) {
       return {
@@ -110,36 +93,50 @@ function getScriptName() {
     ])
     .then(function (answers) {
       switch (answers.script) {
-        case NEW_SCRIPT_SYMBOL:
+      case NEW_SCRIPT_SYMBOL:
           // Get script name:
-          return inquirer.prompt([{
-            type: 'input',
-            name: 'name',
-            message: 'Enter the script name:',
-            validate: function (val) {
-              if (!val) return 'Script name must not be empty';
-              else return true;
-            },
-          }])
+        return inquirer.prompt([{
+          type: 'input',
+          name: 'name',
+          message: 'Enter the script name:',
+          validate: function (val) {
+            if (!val) return 'Script name must not be empty';
+            else return true;
+          },
+        }])
           .then(function (answers) {
             // Set it:
             script = answers.name;
           });
-        case EXIT_SYMBOL:
-          process.exit();
-        default:
-          script = answers.script;
+      case EXIT_SYMBOL:
+        return process.exit();
+      default:
+        script = answers.script;
       }
     });
   }
+}
+
+function confirmCreation() {
+  return inquirer.prompt([
+    {
+      type: 'confirm',
+      name: 'create',
+      message: `The script "${script}" does not exist. Create it?`,
+    },
+  ])
+  .then(function (answers) {
+    if (!answers.create) {
+      console.log('Aborting');
+      process.exit();
+    }
+  });
 }
 
 function pad(str1, str2) {
   var padLen = 60 - (str1.length + str2.length);
   // Ensure at least one space:
   var pad = ' ';
-  for (var i = 1; i < padLen; i++) {
-    pad += ' ';
-  }
+  for (var i = 1; i < padLen; i++) pad += ' ';
   return str1 + pad + str2;
 }

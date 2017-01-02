@@ -13,11 +13,16 @@
     "url": "git+https://github.com/RyanZim/edit-script.git"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ."
   },
   "dependencies": {
     "fs-promise": "^1.0.0",
     "inquirer": "^2.0.0",
     "pkg-up": "^1.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.12.2",
+    "eslint-config-ryanzim": "0.0.1"
   }
 }
