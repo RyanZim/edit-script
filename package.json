@@ -23,6 +23,6 @@
   },
   "devDependencies": {
     "eslint": "^3.12.2",
-    "eslint-config-ryanzim": "0.0.1"
+    "eslint-config-ryanzim": "0.0.2"
   }
 }
