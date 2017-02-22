@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "fs-promise": "^2.0.0",
-    "inquirer": "^2.0.0",
+    "inquirer": "^3.0.2",
     "pkg-up": "^1.0.0"
   },
   "devDependencies": {
