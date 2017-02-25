@@ -1,8 +1,13 @@
 {
   "name": "edit-script",
   "version": "0.1.1",
-  "description": "",
-  "keywords": [],
+  "description": "Edit npm scripts from the command line without worrying about json escaping.",
+  "keywords": [
+    "npm scripts",
+    "package.json",
+    "edit",
+    "json escaping"
+  ],
   "bin": "cli.js",
   "author": "Ryan Zimmerman <opensrc@ryanzim.com>",
   "bugs": "https://github.com/RyanZim/edit-script/issues",
