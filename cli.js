@@ -35,6 +35,7 @@ findPkg()
 .then(function (data) {
   // Assign global variables:
   pkg = data;
+  if (!pkg.scripts) pkg.scripts = {};
   scripts = pkg.scripts;
 })
 .then(getScriptName)
