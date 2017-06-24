@@ -26,41 +26,41 @@ const EXIT_SYMBOL = Symbol('Exit');
 
 // Find package.json path:
 findPkg()
-.then(function (p) {
-  if (!p) throw new Error('No package.json file found!');
-  pkgPath = p;
-  // Load package.json:
-  return fs.readJson(pkgPath);
-})
-.then(function (data) {
-  // Assign global variables:
-  pkg = data;
-  if (!pkg.scripts) pkg.scripts = {};
-  scripts = pkg.scripts;
-})
-.then(getScriptName)
-.then(function editScript() {
-  return inquirer.prompt([
-    {
-      type: 'editor',
-      name: 'script',
-      message: 'Edit your script; an empty script deletes the script',
-      default: scripts[script],
-    },
-  ])
-  .then(function (answers) {
-    var val = answers.script.trim();
-    if (!val) {
-      console.log('Deleting script.');
-      delete scripts[script];
-    } else scripts[script] = val;
-    return fs.writeJson(pkgPath, pkg);
+  .then(function (p) {
+    if (!p) throw new Error('No package.json file found!');
+    pkgPath = p;
+    // Load package.json:
+    return fs.readJson(pkgPath);
+  })
+  .then(function (data) {
+    // Assign global variables:
+    pkg = data;
+    if (!pkg.scripts) pkg.scripts = {};
+    scripts = pkg.scripts;
+  })
+  .then(getScriptName)
+  .then(function editScript() {
+    return inquirer.prompt([
+      {
+        type: 'editor',
+        name: 'script',
+        message: 'Edit your script; an empty script deletes the script',
+        default: scripts[script],
+      },
+    ])
+      .then(function (answers) {
+        var val = answers.script.trim();
+        if (!val) {
+          console.log('Deleting script.');
+          delete scripts[script];
+        } else scripts[script] = val;
+        return fs.writeJson(pkgPath, pkg);
+      });
+  })
+  .catch(function (err) {
+    console.error(err);
+    process.exit(1);
   });
-})
-.catch(function (err) {
-  console.error(err);
-  process.exit(1);
-});
 
 function getScriptName() {
   if (script && !scripts[script]) return confirmCreation();
@@ -92,29 +92,29 @@ function getScriptName() {
         choices: choices,
       },
     ])
-    .then(function (answers) {
-      switch (answers.script) {
-      case NEW_SCRIPT_SYMBOL:
+      .then(function (answers) {
+        switch (answers.script) {
+        case NEW_SCRIPT_SYMBOL:
           // Get script name:
-        return inquirer.prompt([{
-          type: 'input',
-          name: 'name',
-          message: 'Enter the script name:',
-          validate: function (val) {
-            if (!val) return 'Script name must not be empty';
-            else return true;
-          },
-        }])
-          .then(function (answers) {
+          return inquirer.prompt([{
+            type: 'input',
+            name: 'name',
+            message: 'Enter the script name:',
+            validate: function (val) {
+              if (!val) return 'Script name must not be empty';
+              else return true;
+            },
+          }])
+            .then(function (answers) {
             // Set it:
-            script = answers.name;
-          });
-      case EXIT_SYMBOL:
-        return process.exit();
-      default:
-        script = answers.script;
-      }
-    });
+              script = answers.name;
+            });
+        case EXIT_SYMBOL:
+          return process.exit();
+        default:
+          script = answers.script;
+        }
+      });
   }
 }
 
@@ -126,12 +126,12 @@ function confirmCreation() {
       message: `The script "${script}" does not exist. Create it?`,
     },
   ])
-  .then(function (answers) {
-    if (!answers.create) {
-      console.log('Aborting');
-      process.exit();
-    }
-  });
+    .then(function (answers) {
+      if (!answers.create) {
+        console.log('Aborting');
+        process.exit();
+      }
+    });
 }
 
 function pad(str1, str2) {

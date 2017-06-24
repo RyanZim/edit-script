@@ -27,7 +27,7 @@
     "pkg-up": "^2.0.0"
   },
   "devDependencies": {
-    "eslint": "^3.12.2",
+    "eslint": "^4.1.0",
     "eslint-config-ryanzim": "0.0.2"
   }
 }
