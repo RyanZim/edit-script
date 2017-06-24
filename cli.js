@@ -63,59 +63,60 @@ findPkg()
   });
 
 function getScriptName() {
-  if (script && !scripts[script]) return confirmCreation();
-  else {
-    // Get choices:
-    var choices = Object.keys(scripts).map(function (key) {
-      return {
-        name: pad(key, scripts[key]),
-        value: key,
-        short: key,
-      };
-    });
-    // Add aditional choices:
-    choices.push(new inquirer.Separator());
-    choices.push({
-      name: 'Create a new script',
-      value: NEW_SCRIPT_SYMBOL,
-    });
-    choices.push({
-      name: 'Exit edit-script',
-      value: EXIT_SYMBOL,
-    });
-    // Prompt for script name:
-    return inquirer.prompt([
-      {
-        type: 'list',
-        name: 'script',
-        message: 'Select a script to edit:',
-        choices: choices,
-      },
-    ])
-      .then(function (answers) {
-        switch (answers.script) {
-        case NEW_SCRIPT_SYMBOL:
-          // Get script name:
-          return inquirer.prompt([{
-            type: 'input',
-            name: 'name',
-            message: 'Enter the script name:',
-            validate: function (val) {
-              if (!val) return 'Script name must not be empty';
-              else return true;
-            },
-          }])
-            .then(function (answers) {
-            // Set it:
-              script = answers.name;
-            });
-        case EXIT_SYMBOL:
-          return process.exit();
-        default:
-          script = answers.script;
-        }
-      });
+  if (script) {
+    if (!scripts[script]) return confirmCreation();
+    return;
   }
+  // Else, Get choices:
+  var choices = Object.keys(scripts).map(function (key) {
+    return {
+      name: pad(key, scripts[key]),
+      value: key,
+      short: key,
+    };
+  });
+  // Add aditional choices:
+  choices.push(new inquirer.Separator());
+  choices.push({
+    name: 'Create a new script',
+    value: NEW_SCRIPT_SYMBOL,
+  });
+  choices.push({
+    name: 'Exit edit-script',
+    value: EXIT_SYMBOL,
+  });
+  // Prompt for script name:
+  return inquirer.prompt([
+    {
+      type: 'list',
+      name: 'script',
+      message: 'Select a script to edit:',
+      choices: choices,
+    },
+  ])
+    .then(function (answers) {
+      switch (answers.script) {
+      case NEW_SCRIPT_SYMBOL:
+        // Get script name:
+        return inquirer.prompt([{
+          type: 'input',
+          name: 'name',
+          message: 'Enter the script name:',
+          validate: function (val) {
+            if (!val) return 'Script name must not be empty';
+            else return true;
+          },
+        }])
+          .then(function (answers) {
+          // Set it:
+            script = answers.name;
+          });
+      case EXIT_SYMBOL:
+        return process.exit();
+      default:
+        script = answers.script;
+      }
+    });
 }
 
 function confirmCreation() {
