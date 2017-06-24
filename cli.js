@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 'use strict';
-var fs = require('fs-promise');
+var fs = require('fs-extra');
 var inquirer = require('inquirer');
 var findPkg = require('pkg-up');
 
@@ -54,7 +54,7 @@ findPkg()
           console.log('Deleting script.');
           delete scripts[script];
         } else scripts[script] = val;
-        return fs.writeJson(pkgPath, pkg);
+        return fs.writeJson(pkgPath, pkg, { spaces: 2 });
       });
   })
   .catch(function (err) {
