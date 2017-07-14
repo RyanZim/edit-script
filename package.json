@@ -22,7 +22,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "fs-extra": "^3.0.1",
+    "fs-extra": "^4.0.0",
     "inquirer": "^3.0.2",
     "pkg-up": "^2.0.0"
   },
