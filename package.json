@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "eslint": "^4.1.0",
-    "eslint-config-problems": "0.0.2",
+    "eslint-config-problems": "0.1.0",
     "prettier": "^1.10.2"
   }
 }
