@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "fs-extra": "^6.0.0",
-    "inquirer": "^5.1.0",
+    "inquirer": "^6.0.0",
     "pkg-up": "^2.0.0"
   },
   "devDependencies": {
