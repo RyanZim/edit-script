@@ -15,53 +15,41 @@ if (process.argv[2] === '--help') {
   process.exit();
 }
 
-let pkgPath;
-let pkg = {};
-let scripts = {};
-
 const NEW_SCRIPT_SYMBOL = Symbol('Create new script');
 const EXIT_SYMBOL = Symbol('Exit');
 
-// Find package.json path:
-findPkg()
-  .then(p => {
-    if (!p) throw new Error('No package.json file found!');
-    pkgPath = p;
-    // Load package.json:
-    return fs.readJson(pkgPath);
-  })
-  .then(data => {
-    // Assign global variables:
-    pkg = data;
-    if (!pkg.scripts) pkg.scripts = {};
-    scripts = pkg.scripts;
-  })
-  .then(getScriptName)
-  .then(script => {
-    return inquirer
-      .prompt([
-        {
-          type: 'editor',
-          name: 'script',
-          message: 'Edit your script; an empty script deletes the script',
-          default: scripts[script],
-        },
-      ])
-      .then(answers => {
-        const val = answers.script.trim();
-        if (!val) {
-          console.log('Deleting script.');
-          delete scripts[script];
-        } else scripts[script] = val;
-        return fs.writeJson(pkgPath, pkg, { spaces: 2 });
-      });
-  })
-  .catch(err => {
-    console.error(err);
-    process.exit(1);
-  });
+async function main() {
+  const pkgPath = await findPkg();
+  if (!pkgPath) throw new Error('No package.json file found!');
 
-async function getScriptName() {
+  const pkg = await fs.readJson(pkgPath);
+
+  if (!pkg.scripts) pkg.scripts = {};
+
+  const script = await getScriptName(pkg.scripts);
+  const answers = await inquirer.prompt([
+    {
+      type: 'editor',
+      name: 'script',
+      message: 'Edit your script; an empty script deletes the script',
+      default: pkg.scripts[script],
+    },
+  ]);
+  const val = answers.script.trim();
+  if (!val) {
+    console.log('Deleting script.');
+    delete pkg.scripts[script];
+  } else pkg.scripts[script] = val;
+
+  await fs.writeJson(pkgPath, pkg, { spaces: 2 });
+}
+
+main().catch(err => {
+  console.error(err);
+  process.exit(1);
+});
+
+async function getScriptName(scripts) {
   const cliScript = process.argv[2];
   if (cliScript) {
     if (!scripts[cliScript]) await confirmCreation(cliScript);
