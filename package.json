@@ -22,8 +22,8 @@
     "format": "eslint . --fix && prettier --write *.{js,md,yaml,json}"
   },
   "dependencies": {
-    "fs-extra": "^8.0.0",
     "inquirer": "^6.3.1",
+    "jsonfile": "^5.0.0",
     "pkg-up": "^3.1.0"
   },
   "devDependencies": {

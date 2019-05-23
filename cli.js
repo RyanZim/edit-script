@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 'use strict';
-const fs = require('fs-extra');
+const jsonfile = require('jsonfile');
 const inquirer = require('inquirer');
 const findPkg = require('pkg-up');
 
@@ -22,7 +22,7 @@ async function main() {
   const pkgPath = await findPkg();
   if (!pkgPath) throw new Error('No package.json file found!');
 
-  const pkg = await fs.readJson(pkgPath);
+  const pkg = await jsonfile.readFile(pkgPath);
 
   if (!pkg.scripts) pkg.scripts = {};
 
@@ -41,7 +41,7 @@ async function main() {
     delete pkg.scripts[script];
   } else pkg.scripts[script] = val;
 
-  await fs.writeJson(pkgPath, pkg, { spaces: 2 });
+  await jsonfile.writeFile(pkgPath, pkg, { spaces: 2 });
 }
 
 main().catch(err => {
