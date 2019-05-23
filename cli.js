@@ -142,6 +142,6 @@ function confirmCreation() {
 }
 
 function pad(str1, str2) {
-  const desiredWidth = 60
+  const desiredWidth = 80;
   return `${str1.padEnd(desiredWidth - str2.length - 1)} ${str2}`;
 }
