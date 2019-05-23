@@ -142,9 +142,6 @@ function confirmCreation() {
 }
 
 function pad(str1, str2) {
-  const padLen = 60 - (str1.length + str2.length);
-  // Ensure at least one space:
-  let pad = ' ';
-  for (let i = 1; i < padLen; i++) pad += ' ';
-  return str1 + pad + str2;
+  const desiredWidth = 60
+  return `${str1.padEnd(desiredWidth - str2.length - 1)} ${str2}`;
 }
