@@ -22,7 +22,7 @@
     "format": "eslint . --fix && prettier --write --single-quote --trailing-comma=es5 --prose-wrap=never cli.js README.md"
   },
   "dependencies": {
-    "fs-extra": "^7.0.0",
+    "fs-extra": "^8.0.0",
     "inquirer": "^5.1.0",
     "pkg-up": "^2.0.0"
   },
