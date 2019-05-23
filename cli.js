@@ -4,8 +4,6 @@ const fs = require('fs-extra');
 const inquirer = require('inquirer');
 const findPkg = require('pkg-up');
 
-let script = process.argv[2];
-
 // help message:
 if (process.argv[2] === '--help') {
   console.log(
@@ -39,7 +37,7 @@ findPkg()
     scripts = pkg.scripts;
   })
   .then(getScriptName)
-  .then(() => {
+  .then(script => {
     return inquirer
       .prompt([
         {
@@ -63,76 +61,70 @@ findPkg()
     process.exit(1);
   });
 
-function getScriptName() {
-  if (script) {
-    if (!scripts[script]) return confirmCreation();
-    return;
+async function getScriptName() {
+  const cliScript = process.argv[2];
+  if (cliScript) {
+    if (!scripts[cliScript]) await confirmCreation(cliScript);
+    return cliScript;
   }
-  // Else, Get choices:
-  const choices = Object.keys(scripts).map(key => {
-    return {
-      name: pad(key, scripts[key]),
-      value: key,
-      short: key,
-    };
-  });
-  // Add aditional choices:
-  choices.push(new inquirer.Separator());
-  choices.push({
-    name: 'Create a new script',
-    value: NEW_SCRIPT_SYMBOL,
-  });
-  choices.push({
-    name: 'Exit edit-script',
-    value: EXIT_SYMBOL,
-  });
-  // Prompt for script name:
-  return inquirer
-    .prompt([
+
+  const choices = Object.entries(scripts)
+    .map(([key, value]) => {
+      return {
+        name: pad(key, value),
+        value: key,
+        short: key,
+      };
+    })
+    .concat([
+      new inquirer.Separator(),
       {
-        type: 'list',
-        name: 'script',
-        message: 'Select a script to edit:',
-        choices,
+        name: 'Create a new script',
+        value: NEW_SCRIPT_SYMBOL,
       },
-    ])
-    .then(answers => {
-      switch (answers.script) {
-        case NEW_SCRIPT_SYMBOL:
-          // Get script name:
-          return inquirer
-            .prompt([
-              {
-                type: 'input',
-                name: 'name',
-                message: 'Enter the script name:',
-                validate(val) {
-                  if (!val) return 'Script name must not be empty';
-                  return true;
-                },
-              },
-            ])
-            .then(answers => {
-              // Set it:
-              script = answers.name;
-            });
-        case EXIT_SYMBOL:
-          return process.exit();
-        default:
-          script = answers.script;
-      }
-    });
+      {
+        name: 'Exit edit-script',
+        value: EXIT_SYMBOL,
+      },
+    ]);
+
+  // Prompt for script name:
+  const { script } = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'script',
+      message: 'Select a script to edit:',
+      choices,
+    },
+  ]);
+
+  switch (script) {
+    case NEW_SCRIPT_SYMBOL:
+      // Get script name:
+      return (await inquirer.prompt([
+        {
+          type: 'input',
+          name: 'name',
+          message: 'Enter the script name:',
+          validate: val => !!val || 'Script name must not be empty',
+        },
+      ])).name;
+    case EXIT_SYMBOL:
+      return process.exit();
+    default:
+      return script;
+  }
 }
 
-async function confirmCreation() {
-  const answers = await inquirer.prompt([
+async function confirmCreation(script) {
+  const { create } = await inquirer.prompt([
     {
       type: 'confirm',
       name: 'create',
       message: `The script "${script}" does not exist. Create it?`,
     },
   ]);
-  if (!answers.create) {
+  if (!create) {
     console.log('Aborting');
     process.exit();
   }
