@@ -12,7 +12,7 @@ if (process.argv[2] === '--help') {
     `Edit npm scripts from the command line without worrying about json escaping.
 
     edit-script
-    edit-script <script>`
+    edit-script <script>`,
   );
   process.exit();
 }
