@@ -1,6 +1,6 @@
 {
   "name": "edit-script",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Edit npm scripts from the command line without worrying about json escaping.",
   "keywords": [
     "npm scripts",
