@@ -124,21 +124,18 @@ function getScriptName() {
     });
 }
 
-function confirmCreation() {
-  return inquirer
-    .prompt([
-      {
-        type: 'confirm',
-        name: 'create',
-        message: `The script "${script}" does not exist. Create it?`,
-      },
-    ])
-    .then(answers => {
-      if (!answers.create) {
-        console.log('Aborting');
-        process.exit();
-      }
-    });
+async function confirmCreation() {
+  const answers = await inquirer.prompt([
+    {
+      type: 'confirm',
+      name: 'create',
+      message: `The script "${script}" does not exist. Create it?`,
+    },
+  ]);
+  if (!answers.create) {
+    console.log('Aborting');
+    process.exit();
+  }
 }
 
 function pad(str1, str2) {
