@@ -44,7 +44,7 @@ async function main() {
   await jsonfile.writeFile(pkgPath, pkg, { spaces: 2 });
 }
 
-main().catch(err => {
+main().catch((err) => {
   console.error(err);
   process.exit(1);
 });
@@ -89,14 +89,16 @@ async function getScriptName(scripts) {
   switch (script) {
     case NEW_SCRIPT_SYMBOL:
       // Get script name:
-      return (await inquirer.prompt([
-        {
-          type: 'input',
-          name: 'name',
-          message: 'Enter the script name:',
-          validate: val => !!val || 'Script name must not be empty',
-        },
-      ])).name;
+      return (
+        await inquirer.prompt([
+          {
+            type: 'input',
+            name: 'name',
+            message: 'Enter the script name:',
+            validate: (val) => !!val || 'Script name must not be empty',
+          },
+        ])
+      ).name;
     case EXIT_SYMBOL:
       return process.exit();
     default:
