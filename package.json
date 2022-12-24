@@ -27,8 +27,8 @@
     "pkg-up": "^3.1.0"
   },
   "devDependencies": {
-    "eslint": "^5.0.0",
-    "eslint-config-problems": "^3.0.0",
+    "eslint": "^8.30.0",
+    "eslint-config-problems": "^7.0.1",
     "prettier": "^2.8.1"
   },
   "prettier": {
