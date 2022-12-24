@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import jsonfile from 'jsonfile';
 import inquirer from 'inquirer';
-import findPkg from 'pkg-up';
+import { pkgUp as findPkg } from 'pkg-up';
 
 // help message:
 if (process.argv[2] === '--help') {
