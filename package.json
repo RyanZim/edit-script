@@ -37,5 +37,8 @@
     "eslint-config-problems": "^7.0.1",
     "prettier": "^2.8.1",
     "sort-package-json": "^2.1.0"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }
