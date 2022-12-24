@@ -8,19 +8,24 @@
     "edit",
     "json escaping"
   ],
-  "type": "module",
-  "bin": "cli.js",
-  "author": "Ryan Zimmerman <opensrc@ryanzim.com>",
-  "bugs": "https://github.com/RyanZim/edit-script/issues",
   "homepage": "https://github.com/RyanZim/edit-script#readme",
-  "license": "MIT",
+  "bugs": "https://github.com/RyanZim/edit-script/issues",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/RyanZim/edit-script.git"
   },
+  "license": "MIT",
+  "author": "Ryan Zimmerman <opensrc@ryanzim.com>",
+  "type": "module",
+  "bin": "cli.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "format": "eslint . --fix && prettier --write *.{js,md,yaml,json}"
+    "format": "eslint . --fix && prettier --write *.{js,md,yaml} && sort-package-json",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "prettier": {
+    "proseWrap": "never",
+    "singleQuote": true,
+    "trailingComma": "all"
   },
   "dependencies": {
     "inquirer": "^9.1.4",
@@ -30,11 +35,7 @@
   "devDependencies": {
     "eslint": "^8.30.0",
     "eslint-config-problems": "^7.0.1",
-    "prettier": "^2.8.1"
-  },
-  "prettier": {
-    "singleQuote": true,
-    "trailingComma": "all",
-    "proseWrap": "never"
+    "prettier": "^2.8.1",
+    "sort-package-json": "^2.1.0"
   }
 }
