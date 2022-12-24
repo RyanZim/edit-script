@@ -1,8 +1,7 @@
 #!/usr/bin/env node
-'use strict';
-const jsonfile = require('jsonfile');
-const inquirer = require('inquirer');
-const findPkg = require('pkg-up');
+import jsonfile from 'jsonfile';
+import inquirer from 'inquirer';
+import findPkg from 'pkg-up';
 
 // help message:
 if (process.argv[2] === '--help') {

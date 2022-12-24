@@ -1,4 +1,6 @@
 extends: problems
+parserOptions:
+  sourceType: module
 env:
   node: true
 rules:

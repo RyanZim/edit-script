@@ -8,6 +8,7 @@
     "edit",
     "json escaping"
   ],
+  "type": "module",
   "bin": "cli.js",
   "author": "Ryan Zimmerman <opensrc@ryanzim.com>",
   "bugs": "https://github.com/RyanZim/edit-script/issues",
